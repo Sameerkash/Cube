@@ -41,16 +41,17 @@ class _AppViewState extends State<AppView> {
     const ChatView(),
   ];
 
+  void onPageChange(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  int currentIndex = 0;
+
+  
   @override
   Widget build(BuildContext context) {
-    int currentIndex = 0;
-
-    void onPageChange(int index) {
-      setState(() {
-        currentIndex = index;
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
