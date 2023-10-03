@@ -1,6 +1,6 @@
 import 'package:cube/core/bottombar.dart';
+import 'package:cube/features/catalog/catalog.dart';
 import 'package:cube/features/chat/chat.dart';
-import 'package:cube/features/dashboard/dashboard.dart';
 import 'package:cube/features/finance/finance.dart';
 import 'package:cube/features/home/home.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _AppViewState extends State<AppView> {
   final screens = [
     const HomeView(),
     const FinanceView(),
-    const DashboardView(),
+    const CatalogView(),
     const ChatView(),
   ];
 
