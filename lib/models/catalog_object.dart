@@ -4,18 +4,35 @@
 
 import 'dart:convert';
 
+import 'package:cube/core/networking/networking.dart';
+
+class CatalogObjectList extends BaseModel {
+  List<CatalogObject>? catalog;
+
+  CatalogObjectList({required this.catalog});
+
+  CatalogObjectList.empty();
+
+  @override
+  fromJson(Map<String, dynamic> json) => CatalogObjectList(
+      catalog : List<CatalogObject>.from(json['objects'].map((x) {
+        CatalogObject object = CatalogObject.fromJson(x);
+      return object;})
+  ));
+}
+
 CatalogObject catalogObjectFromJson(String str) => CatalogObject.fromJson(json.decode(str));
 
 String catalogObjectToJson(CatalogObject data) => json.encode(data.toJson());
 
 class CatalogObject {
-  String type;
-  String id;
-  DateTime updatedAt;
-  DateTime createdAt;
-  int version;
-  bool isDeleted;
-  bool presentAtAllLocations;
+  String? type;
+  String? id;
+  DateTime? updatedAt;
+  DateTime? createdAt;
+  int? version;
+  bool? isDeleted;
+  bool? presentAtAllLocations;
   CatalogItemData? itemData;
   ItemVariationData? itemVariationData;
 
@@ -30,6 +47,8 @@ class CatalogObject {
     this.itemData,
     this.itemVariationData,
   });
+
+  CatalogObject.empty();
 
   factory CatalogObject.fromJson(Map<String, dynamic> json) => CatalogObject(
     type: json["type"],
@@ -46,14 +65,29 @@ class CatalogObject {
   Map<String, dynamic> toJson() => {
     "type": type,
     "id": id,
-    "updated_at": updatedAt.toIso8601String(),
-    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt,
+    "created_at": createdAt,
     "version": version,
     "is_deleted": isDeleted,
     "present_at_all_locations": presentAtAllLocations,
     "item_data": itemData?.toJson(),
     "item_variation_data": itemVariationData?.toJson(),
   };
+
+  @override
+  fromJson(Map<String,dynamic> json) {
+    return CatalogObject(
+      type: json["type"],
+      id: json["id"],
+      updatedAt: DateTime.parse(json["updated_at"] ?? ""),
+      createdAt: DateTime.parse(json["created_at"] ?? ""),
+      version: json["version"],
+      isDeleted: json["is_deleted"],
+      presentAtAllLocations: json["present_at_all_locations"],
+      itemData: json["item_data"] == null ? null : CatalogItemData.fromJson(json["item_data"]),
+      itemVariationData: json["item_variation_data"] == null ? null : ItemVariationData.fromJson(json["item_variation_data"]),
+    );
+  }
 }
 
 class CatalogItemData {
@@ -90,7 +124,7 @@ class CatalogItemData {
         variations: List<CatalogObject>.from(
             json["variations"].map((x) => CatalogObject.fromJson(x))),
         productType: json["product_type"],
-        imageIds: List<String>.from(json["image_ids"].map((x) => x)),
+        imageIds: (json["image_ids"] != null) ? List<String>.from(json["image_ids"].map((x) => x)) : [],
         descriptionHtml: json["description_html"],
         descriptionPlaintext: json["description_plaintext"],
         isArchived: json["is_archived"],

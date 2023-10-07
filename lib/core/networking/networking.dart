@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,7 +11,7 @@ class Networking {
   final _dio = Dio(BaseOptions(
       baseUrl: 'https://connect.squareupsandbox.com/v2/',
       connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
+      receiveTimeout: const Duration(seconds: 5),
       headers: {
         'Square-Version': '2023-09-25',
         'Authorization':
@@ -17,13 +19,13 @@ class Networking {
         'Content-Type': 'application/json'
       }));
 
-  Future<dynamic> getRequest(
-      {required String path, required Map<String, dynamic> params}) async {
-    Response response = await _dio.get(path, queryParameters: params);
-    if (response.statusCode == 200) {
-      debugPrint('getRequest response is $response');
-      return response.data;
-    }
+  Future<T?> getRequest<T extends BaseModel>(
+      {required String path, required Map<String, dynamic> params,required T type}) async {
+      Response response = await _dio.get(path, queryParameters: params);
+      if (response.statusCode == 200) {
+        debugPrint('getRequest response is $response');
+        return type.fromJson(response.data);
+      }
   }
 
   Future<void> postRequest(
@@ -33,4 +35,11 @@ class Networking {
       debugPrint('postRequest response is $response');
     }
   }
+}
+
+
+abstract class BaseModel<T> {
+  @factory
+  T fromJson(Map<String,dynamic> json);
+
 }

@@ -1,9 +1,11 @@
 import 'package:cube/core/bottombar.dart';
 import 'package:cube/features/catalog/catalog.dart';
+import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:cube/features/chat/chat.dart';
 import 'package:cube/features/finance/finance.dart';
 import 'package:cube/features/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +39,9 @@ class _AppViewState extends State<AppView> {
   final screens = [
     const HomeView(),
     const FinanceView(),
-    const CatalogView(),
+    BlocProvider<CatalogCubit>(
+        create: (context) => CatalogCubit(),
+        child: const CatalogView()),
     const ChatView(),
   ];
 

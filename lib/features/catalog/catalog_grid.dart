@@ -1,11 +1,22 @@
+import 'package:cube/features/catalog/catalog_item.dart';
+import 'package:cube/models/catalog_object.dart';
 import 'package:flutter/material.dart';
 
 class CatalogGrid extends StatelessWidget {
-  const CatalogGrid({Key? key}) : super(key: key);
+  CatalogGrid(this.catalog, {Key? key}) : super(key: key);
+
+  List<CatalogObject> catalog;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // return GridView.builder(crossAxisCount: 2, gridDelegate: null, itemBuilder: (BuildContext context, int index) {  },);
+    return GridView.builder(
+      itemCount: catalog.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemBuilder: (BuildContext context, int index) {
+        return CatalogItem(data: catalog[index].itemData);
+      },
+    );
   }
 }

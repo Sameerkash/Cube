@@ -1,24 +1,25 @@
-import 'package:cube/features/catalog/brain/brain.dart';
+import 'package:cube/features/catalog/catalog_grid.dart';
+import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CatalogView extends StatefulWidget {
+class CatalogView extends StatelessWidget {
   const CatalogView({super.key});
 
   @override
-  State<CatalogView> createState() => _CatalogViewState();
-}
-
-class _CatalogViewState extends State<CatalogView> {
-
-  CatalogBrain brain = CatalogBrain();
-
-  @override
-  void initState() {
-    super.initState();
-    brain.getCatalogList();
-  }
-  @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.red,height: 100,width: 100,);
+    return BlocBuilder<CatalogCubit,CatalogStates>(
+      builder: (context,state) {
+        if (state is LoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        else if (state is LoadedState) {
+          return CatalogGrid(state.catalog);
+        } else {
+          return const Center(child: Text("some error occurred"),);
+        }
+
+      }
+    );
   }
 }
