@@ -1,5 +1,5 @@
-import 'package:cube/features/catalog/catalog_item.dart';
-import 'package:cube/models/catalog_object.dart';
+import 'package:cube/common_utils/models/catalog_object.dart';
+import 'package:cube/features/catalog/view/widget/catalog_item.dart';
 import 'package:flutter/material.dart';
 
 class CatalogGrid extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:cube/core/bottombar.dart';
-import 'package:cube/features/catalog/catalog.dart';
+import 'package:cube/features/catalog/view/catalog.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:cube/features/chat/chat.dart';
 import 'package:cube/features/finance/finance.dart';

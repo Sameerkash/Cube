@@ -10,8 +10,8 @@ class Networking {
 
   final _dio = Dio(BaseOptions(
       baseUrl: 'https://connect.squareupsandbox.com/v2/',
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 5),
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
       headers: {
         'Square-Version': '2023-09-25',
         'Authorization':
@@ -28,12 +28,10 @@ class Networking {
       }
   }
 
-  Future<void> postRequest(
+  Future<Response?> postRequest(
       {required String path, required Map<String, dynamic> body}) async {
     Response response = await _dio.post(path, data: body);
-    if (response.statusCode == 200) {
-      debugPrint('postRequest response is $response');
-    }
+    return response;
   }
 }
 
