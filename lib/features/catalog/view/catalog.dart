@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:cube/common_utils/models/catalog_object.dart';
+import 'package:cube/features/catalog/models/catalog_object.dart';
 import 'package:cube/features/catalog/view/add_product_screen.dart';
 import 'package:cube/features/catalog/view/widget/catalog_grid.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';

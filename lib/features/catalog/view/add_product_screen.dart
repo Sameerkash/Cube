@@ -1,5 +1,5 @@
-import 'package:cube/common_utils/widgets/custom_button.dart';
-import 'package:cube/common_utils/widgets/custom_text_field.dart';
+import 'package:cube/core/widgets/custom_button.dart';
+import 'package:cube/core/widgets/custom_text_field.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -3,49 +3,78 @@ import 'package:cube/features/onboarding/view/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 
-class OnBoardingCarousel extends StatelessWidget {
-  OnBoardingCarousel({Key? key}) : super(key: key);
+import '../../../common_utils/colors.dart';
 
+class OnBoardingCarousel extends StatefulWidget {
+  const OnBoardingCarousel({Key? key}) : super(key: key);
+
+  @override
+  State<OnBoardingCarousel> createState() => _OnBoardingCarouselState();
+}
+
+class _OnBoardingCarouselState extends State<OnBoardingCarousel> {
   TextEditingController ideaController = TextEditingController();
+
   TextEditingController aimController = TextEditingController();
+
   TextEditingController financesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double imageSize = MediaQuery.of(context).size.height/3;
+    // double imageSize = MediaQuery.of(context).size.height / 3;
 
     return Scaffold(
       body: OnBoardingSlider(
         totalPage: 4,
-        finishButtonText: "I am in",
-        headerBackgroundColor: Colors.white,
+        finishButtonText: "Launch Business",
+        finishButtonTextStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+        ),
+        finishButtonStyle: FinishButtonStyle(
+          backgroundColor: AppColors.primary,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+        ),
+        headerBackgroundColor: AppColors.appbarBackground,
         centerBackground: true,
-        background: [
-          Image.asset('assets/images/onboarding_idea.png',height: imageSize,),
-          Image.asset('assets/images/onboarding_aim.jpg',height: imageSize,),
-          Image.asset('assets/images/onboarding_finances.jpg',height: imageSize,),
-          const SizedBox.shrink()
+        background: const [
+          SizedBox.shrink(),
+          SizedBox.shrink(),
+          SizedBox.shrink(),
+          SizedBox.shrink()
         ],
         speed: 1.0,
         pageBodies: [
           OnBoardingScreen(
-              questionText: "What is your product?",
-              textFieldHint: "Tell us about your idea/product in detail",
-              bottomText: "This will help us get an idea about your business",
-              controller: ideaController),
+            questionText: "What is your Idea?",
+            textFieldHint: "“I want  to  sell flowers”",
+            bottomText: "This will help us get an idea about your business",
+            controller: ideaController,
+            gradientColors: [AppColors.primary, Colors.white70],
+          ),
           OnBoardingScreen(
-              questionText: "What is your aim with the business?",
-              textFieldHint:
-                  "Tell us what you want to achieve and what are your goals with the idea",
-              bottomText:
-                  "This will help us to determine the extend of your business",
-              controller: aimController),
+            questionText: "What is your aim with this Idea?",
+            textFieldHint:
+                "“I want to sell a wide variety of flowers from my garden.”",
+            bottomText:
+                "This will help us to determine the extend of your business",
+            controller: aimController,
+            gradientColors: [AppColors.secondary, Colors.white70],
+          ),
           OnBoardingScreen(
-              questionText: "How are you looking to finance the business?",
-              textFieldHint: "Do you need initial funding or are you self financed?",
-              bottomText: "This will help us manage your finances and needs",
-              controller: financesController),
-          OnBoardingConsentScreen()
+            questionText: "How are you looking to finance the Idea?",
+            textFieldHint: "“I am investing \$1000 from my savings”",
+            bottomText:
+                "This will help us understand and manage your finances and needs",
+            controller: financesController,
+            gradientColors: [
+              AppColors.primary.withOpacity(0.6),
+              AppColors.secondary
+            ],
+          ),
+          const OnBoardingConsentScreen()
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:cube/common_utils/models/catalog_object.dart';
+import 'package:cube/features/catalog/models/catalog_object.dart';
 import 'package:cube/features/catalog/view/widget/catalog_item.dart';
 import 'package:flutter/material.dart';
 

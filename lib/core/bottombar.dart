@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../common_utils/colors.dart';
 
 class TabItem {
   TabItem({
@@ -55,27 +59,25 @@ class _CustomTabBarState extends State<CustomTabBar> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(32, 0, 32, 8),
+        margin: const EdgeInsets.fromLTRB(32, 0, 32, 16),
         padding: const EdgeInsets.all(8),
         constraints: const BoxConstraints(maxWidth: 400),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          gradient: LinearGradient(colors: [
-            Colors.white.withOpacity(0.5),
-            Colors.white.withOpacity(0)
-          ]),
+          color: Colors.white.withOpacity(0.12),
+
         ),
         child: Container(
-          height: 60,
+          height: 55,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            color: RiveAppTheme.background2.withOpacity(0.8),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: RiveAppTheme.background2.withOpacity(0.3),
+                color: AppColors.primary.withOpacity(0.15),
                 blurRadius: 20,
-                offset: const Offset(0, 20),
+                spreadRadius: 2,
+                offset: const Offset(0, 5),
               )
             ],
           ),
@@ -104,7 +106,8 @@ class _CustomTabBarState extends State<CustomTabBar> {
                               //   color: RiveAppTheme.accentColor,
                               //   borderRadius: BorderRadius.circular(2),
                               // ),
-                              child: Icon(icon, color: Colors.white, size: 30),
+                              child:
+                                  Icon(icon, color: Colors.white, size: 30),
                             ),
                           ),
                         ]),
