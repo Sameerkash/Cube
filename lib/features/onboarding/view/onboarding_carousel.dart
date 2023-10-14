@@ -1,6 +1,8 @@
-import 'package:cube/features/onboarding/view/onboarding_consent.dart';
+import 'package:cube/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:cube/features/onboarding/view/onboarding_insights.dart';
 import 'package:cube/features/onboarding/view/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 
 import '../../../common_utils/colors.dart';
@@ -19,14 +21,24 @@ class _OnBoardingCarouselState extends State<OnBoardingCarousel> {
 
   TextEditingController financesController = TextEditingController();
 
+  late OnBoardingCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = BlocProvider.of<OnBoardingCubit>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // double imageSize = MediaQuery.of(context).size.height / 3;
 
     return Scaffold(
       body: OnBoardingSlider(
         totalPage: 4,
         finishButtonText: "Launch Business",
+        onFinish: () {
+          _cubit.getOnBoardingInsights(ideaController.text, aimController.text, financesController.text);
+        },
         finishButtonTextStyle: const TextStyle(
           color: Colors.black,
           fontSize: 20,

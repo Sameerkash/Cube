@@ -4,6 +4,7 @@ import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:cube/features/chat/chat.dart';
 import 'package:cube/features/finance/finance.dart';
 import 'package:cube/features/home/home.dart';
+import 'package:cube/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:cube/features/onboarding/view/onboarding_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.scaffoldBackground,
         useMaterial3: true,
       ),
-      home: const OnBoardingCarousel(),
+      home: BlocProvider<OnBoardingCubit>(
+          create: (context) => OnBoardingCubit(),
+          child: const OnBoardingCarousel()),
     );
   }
 }
