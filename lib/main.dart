@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.scaffoldBackground,
         useMaterial3: true,
       ),
-      home: const OnBoardingCarousel(),
+      home: const AppView(),
     );
   }
 }

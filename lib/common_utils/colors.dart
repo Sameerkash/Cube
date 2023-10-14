@@ -19,4 +19,5 @@ class AppColors {
   static Color secondaryText = Color(hexToInt('#B2D0CE'));
 
   static Color textfield = Color(hexToInt('#545353'));
+  static Color cardBackground = Color(hexToInt('#252626'));
 }

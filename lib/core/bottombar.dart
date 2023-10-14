@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +63,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           color: Colors.white.withOpacity(0.12),
-
         ),
         child: Container(
           height: 55,
@@ -101,13 +98,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
                               height: 4,
-                              width: _selectedTab == index ? 20 : 0,
+                              width: _selectedTab == index ? 15 : 0,
                               // decoration: BoxDecoration(
                               //   color: RiveAppTheme.accentColor,
                               //   borderRadius: BorderRadius.circular(2),
                               // ),
-                              child:
-                                  Icon(icon, color: Colors.white, size: 30),
+                              child: Icon(icon, color: Colors.white, size: 30),
                             ),
                           ),
                         ]),

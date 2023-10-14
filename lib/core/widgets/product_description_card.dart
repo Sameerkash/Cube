@@ -1,17 +1,20 @@
-import 'package:cube/core/widgets/arrow_icon.dart';
 import 'package:flutter/material.dart';
+
+import 'package:cube/core/widgets/arrow_icon.dart';
 
 class ProductDescriptionCard extends StatelessWidget {
   final List<Color> gradientColors;
   final String title;
   final String? description;
   final double? width;
+  final bool showArrow;
   const ProductDescriptionCard({
     Key? key,
     required this.gradientColors,
     required this.title,
     this.description,
     this.width,
+    this.showArrow = true,
   }) : super(key: key);
 
   @override
@@ -30,6 +33,7 @@ class ProductDescriptionCard extends StatelessWidget {
         width: width,
         constraints: const BoxConstraints(
           minHeight: 250,
+          maxHeight: 500,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
@@ -59,13 +63,14 @@ class ProductDescriptionCard extends StatelessWidget {
                     ),
                 ],
               ),
-              const Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [ArrowIcon()],
-                ),
-              )
+              if (showArrow)
+                const Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [ArrowIcon()],
+                  ),
+                )
             ],
           ),
         ),

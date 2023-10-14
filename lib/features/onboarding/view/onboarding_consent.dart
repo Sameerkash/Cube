@@ -1,5 +1,5 @@
 import 'package:cube/common_utils/colors.dart';
-import 'package:cube/core/widgets/proposal_card.dart';
+import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingConsentScreen extends StatefulWidget {
