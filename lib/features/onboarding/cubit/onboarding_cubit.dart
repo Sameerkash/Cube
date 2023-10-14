@@ -1,3 +1,4 @@
+import 'package:cube/auth/secrets.dart';
 import 'package:cube/core/networking/networking.dart';
 import 'package:cube/core/networking/paths.dart';
 import 'package:cube/features/onboarding/models/insight_card.dart';
@@ -34,7 +35,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     Response? response = await Networking.instance.postRequest(
       path: NetworkPaths.palmAiBaseUrl,
       body: body,
-      params: {'key': 'AIzaSyCffiqR_FEAoAmcSx7AgP_FnPt-jDpGyV0'},
+      params: {'key': Secrets.palmAPIKey},
       headers: {'Content-Type' : 'application/json'}
     );
     if (response != null && response.statusCode == 200) {

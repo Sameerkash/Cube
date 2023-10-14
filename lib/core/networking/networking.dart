@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cube/auth/secrets.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,8 +15,7 @@ class Networking {
       receiveTimeout: const Duration(seconds: 20),
       // headers: {
       //   'Square-Version': '2023-09-25',
-      //   'Authorization':
-      //       'Bearer EAAAEE0Vl4dTGw0exoIwB7Ttq92t50QkdGXkFE_r80rcfmMJIHEkJajpwWHLMTkj',
+      //   'Authorization' : Secrets.squareAPIKey,
       //   'Content-Type': 'application/json'
       // }
       ));
