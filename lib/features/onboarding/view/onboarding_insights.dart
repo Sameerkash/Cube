@@ -1,5 +1,5 @@
 import 'package:cube/common_utils/colors.dart';
-import 'package:cube/core/widgets/proposal_card.dart';
+import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:cube/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
