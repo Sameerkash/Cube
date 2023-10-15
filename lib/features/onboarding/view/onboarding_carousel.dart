@@ -34,10 +34,13 @@ class _OnBoardingCarouselState extends State<OnBoardingCarousel> {
 
     return Scaffold(
       body: OnBoardingSlider(
-        totalPage: 4,
-        finishButtonText: "Launch Business",
+        totalPage: 3,
+        finishButtonText: "View Insights",
         onFinish: () {
           _cubit.getOnBoardingInsights(ideaController.text, aimController.text, financesController.text);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BlocProvider.value(
+              value: _cubit,
+              child: const OnBoardingInsightScreen())));
         },
         finishButtonTextStyle: const TextStyle(
           color: Colors.black,
@@ -55,7 +58,6 @@ class _OnBoardingCarouselState extends State<OnBoardingCarousel> {
           SizedBox.shrink(),
           SizedBox.shrink(),
           SizedBox.shrink(),
-          SizedBox.shrink()
         ],
         speed: 1.0,
         pageBodies: [
@@ -86,7 +88,6 @@ class _OnBoardingCarouselState extends State<OnBoardingCarousel> {
               AppColors.secondary
             ],
           ),
-          const OnBoardingConsentScreen()
         ],
       ),
     );

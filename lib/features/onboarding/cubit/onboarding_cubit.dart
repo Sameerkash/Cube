@@ -11,6 +11,8 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 
   List<InsightCard> cardsData = [];
 
+
+
   Future<void> getOnBoardingInsights(String ideaInput,String aimInput,String financesInput) async {
     emit(OnBoardingAPILoading());
     String commonInput = 'I want to start a new business. My idea is : $ideaInput. My goal is : $aimInput, My financials are : $financesInput';

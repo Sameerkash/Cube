@@ -40,7 +40,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             spacer(),
             CustomTextField(hintText: 'Price for the product', controller: productPrice, keyboardType: TextInputType.number),
             spacer(),
-            CustomButton(title: 'Add', onTap: () {_cubit.addProduct(productName.text, productDesc.text, int.parse(productPrice.text));})
+            CustomButton(title: 'Add', onTap: () {_cubit.addProduct(productName.text, productDesc.text, int.parse(productPrice.text));},gradientColors: const [Colors.blue,Colors.white],)
           ],
         ),
       ),
