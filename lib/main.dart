@@ -7,7 +7,6 @@ import 'package:cube/features/finance/finance.dart';
 import 'package:cube/features/home/home.dart';
 import 'package:cube/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:cube/features/onboarding/view/onboarding_carousel.dart';
-import 'package:cube/features/onboarding/view/seller_auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ void main() async {
         scaffoldBackgroundColor: AppColors.scaffoldBackground,
         useMaterial3: true,
       ),
-      home: MyApp()));
+      home: AppView()));
 }
 
 class MyApp extends StatefulWidget {

@@ -10,19 +10,25 @@ class Networking {
   static final Networking instance = Networking._();
 
   final _dio = Dio(BaseOptions(
-      // baseUrl: 'https://connect.squareupsandbox.com/v2/',
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
-      // headers: {
-      //   'Square-Version': '2023-09-25',
-      //   'Authorization' : Secrets.squareAPIKey,
-      //   'Content-Type': 'application/json'
-      // }
       ));
 
+  static Map<String,dynamic> squareHeaders = {
+    'Square-Version': '2023-09-25',
+    'Authorization' : Secrets.squareAPIKey,
+    'Content-Type': 'application/octet-stream'
+  };
+
+  static Map<String,dynamic> squareHeadersForImage = {
+    'Square-Version': '2021-12-14',
+    'Authorization' : Secrets.squareAPIKey,
+    'Content-Type': 'application/json'
+  };
+
   Future<T?> getRequest<T extends BaseModel>(
-      {required String path, required Map<String, dynamic> params,required T type}) async {
-      Response response = await _dio.get(path, queryParameters: params);
+      {required String path, required Map<String, dynamic> params,required T type, Map<String,dynamic>? headers}) async {
+      Response response = await _dio.get(path, queryParameters: params,options: Options(headers: headers));
       if (response.statusCode == 200) {
         debugPrint('getRequest response is $response');
         return type.fromJson(response.data);
@@ -30,9 +36,18 @@ class Networking {
   }
 
   Future<Response?> postRequest(
-      {required String path, required Map<String, dynamic> body,Map<String,dynamic>? params, Map<String,dynamic>? headers}) async {
-    Response response = await _dio.post(path, data: body,queryParameters: params,options: Options(headers: headers));
-    return response;
+      {required String path, required dynamic body,Map<String,dynamic>? params, Map<String,dynamic>? headers}) async {
+    try {
+      Response response = await _dio.post(path, data: body,
+          queryParameters: params,
+          options: Options(headers: headers));
+      if(response.statusCode != 200) {
+        print("postRequest error is ${response.data}");
+      }
+      return response;
+    }catch(e) {
+      print("postRequest error is $e");
+    }
   }
 }
 

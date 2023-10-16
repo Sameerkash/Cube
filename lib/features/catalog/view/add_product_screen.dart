@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:cube/common_utils/colors.dart';
+import 'package:cube/common_utils/text_style.dart';
 import 'package:cube/core/widgets/custom_button.dart';
 import 'package:cube/core/widgets/custom_text_field.dart';
+import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
@@ -12,11 +18,13 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-
   TextEditingController productName = TextEditingController();
   TextEditingController productDesc = TextEditingController();
   TextEditingController productPrice = TextEditingController();
   late CatalogCubit _cubit;
+  File? _image;
+  String? imagePath;
+  final picker = ImagePicker();
 
   @override
   void initState() {
@@ -26,26 +34,143 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom),
+    return Container(
+      margin:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground,
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+      ),
       child: Form(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             spacer(),
-            CustomTextField(hintText: 'What is your product called ?', controller: productName, keyboardType: TextInputType.text),
+            heading('ADD IMAGES'),
+            AddProductImage(),
             spacer(),
-            CustomTextField(hintText: 'Describe the product in few words', controller: productDesc, keyboardType: TextInputType.text),
+            heading('PRODUCT TITLE'),
+            CustomTextField(
+                hintText: 'What is the name of this product?',
+                controller: productName,
+                keyboardType: TextInputType.text),
             spacer(),
-            CustomTextField(hintText: 'Price for the product', controller: productPrice, keyboardType: TextInputType.number),
+            heading('PRODUCT TITLE'),
+            CustomTextField(
+                hintText: 'Give a bit of description about the product ?',
+                controller: productDesc,
+                keyboardType: TextInputType.text),
             spacer(),
-            CustomButton(title: 'Add', onTap: () {_cubit.addProduct(productName.text, productDesc.text, int.parse(productPrice.text));},gradientColors: const [Colors.blue,Colors.white],)
+            heading('PRICE'),
+            CustomTextField(
+                hintText: 'A suitable price for the product',
+                controller: productPrice,
+                keyboardType: TextInputType.number),
+            spacer(),
+            CustomButton(
+              title: 'Add',
+              onTap: () {
+                _cubit.addProduct(productName.text, productDesc.text,
+                    int.parse(productPrice.text),imagePath);
+              },
+              gradientColors: const [Colors.yellowAccent, Colors.white],
+            ),
+            spacer(),
           ],
         ),
       ),
     );
   }
+
+  Widget AddProductImage() => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: LinearGradient(
+            colors: [AppColors.cardPrimary, Colors.black],
+          ),
+        ),
+        height: 100,
+        width: 100,
+        child: _image == null
+            ? InkWell(
+          onTap: showOptions,
+              child: const Center(
+                  child: Icon(Icons.add),
+                ),
+            )
+            : Image.file(
+                _image!,
+                fit: BoxFit.contain,
+              ),
+      );
+
+  Future showOptions() async {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => Container(
+          margin:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          decoration: BoxDecoration(
+              color: AppColors.cardBackground,
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+          ),
+          child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                      onTap: getImageFromCamera,
+                      child: ListTile(
+                          leading: Icon(Icons.camera_alt),
+                          title: Text("Click a picture",
+                              style: AppTextStyle.smallHeading))),
+                  Divider(),
+                  InkWell(
+                      onTap: getImageFromGallery,
+                      child: ListTile(
+                          leading: Icon(Icons.file_copy_outlined),
+                          title: Text("Pick from Gallery",
+                              style: AppTextStyle.smallHeading))),
+                ],
+              ),
+        ));
+  }
+
+//Image Picker function to get image from camera
+  Future getImageFromCamera() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      imagePath = await _cubit.uploadImageGetId(_image!);
+    }
+    Navigator.pop(context);
+  }
+
+  //Image Picker function to get image from gallery
+  Future getImageFromGallery() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+    setState(() {
+        _image = File(pickedFile.path);
+    });
+    imagePath = await _cubit.uploadImageGetId(_image!);
+    }
+    Navigator.pop(context);
+  }
+
+
 }
+
+
+
+Widget heading(String value) => Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Text(
+        value,
+        style: AppTextStyle.smallHeading,
+      ),
+    );
 
 Widget spacer() => const SizedBox(height: 20);

@@ -91,16 +91,16 @@ class CatalogObject {
 }
 
 class CatalogItemData {
-  String name;
-  String description;
-  String abbreviation;
-  bool isTaxable;
-  List<CatalogObject> variations;
-  String productType;
-  List<String> imageIds;
-  String descriptionHtml;
-  String descriptionPlaintext;
-  bool isArchived;
+  String? name;
+  String? description;
+  String? abbreviation;
+  bool? isTaxable;
+  List<CatalogObject?> variations;
+  String? productType;
+  List<String?> imageIds;
+  String? descriptionHtml;
+  String? descriptionPlaintext;
+  bool? isArchived;
 
   CatalogItemData({
     required this.name,
@@ -136,7 +136,7 @@ class CatalogItemData {
         "description": description,
         "abbreviation": abbreviation,
         "is_taxable": isTaxable,
-        "variations": List<dynamic>.from(variations.map((x) => x.toJson())),
+        "variations": List<dynamic>.from(variations.map((x) => x?.toJson())),
         "product_type": productType,
         "image_ids": List<dynamic>.from(imageIds.map((x) => x)),
         "description_html": descriptionHtml,
