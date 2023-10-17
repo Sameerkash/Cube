@@ -94,28 +94,31 @@ class ProductDescriptionCard extends StatelessWidget {
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
               gradient: LinearGradient(colors: gradientColors),
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20,),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  if (description != null)
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20,),
                     Text(
-                      description!,
+                      title,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
                       ),
                     ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    if (description != null)
+                      Text(
+                        description!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

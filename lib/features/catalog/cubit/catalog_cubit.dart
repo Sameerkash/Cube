@@ -59,7 +59,7 @@ class CatalogCubit extends Cubit<CatalogStates> {
     return null;
   }
 
-  void addProduct(String name, String desc, int price,String? imagePath) async {
+  void addProduct(String name, String desc, int price) async {
     Map<String, dynamic> body = {
       "idempotency_key": const Uuid().v1(),
       "object": {
@@ -82,15 +82,6 @@ class CatalogCubit extends Cubit<CatalogStates> {
             },
           ]
         },
-        "image": {
-          "type": "IMAGE",
-          "image_data": {
-            "caption": "daisy plant",
-            "name": "daisy",
-            "url" : imagePath,
-          },
-          "id": "dfdfd"
-        }
       }
     };
     emit(CloseBottomSheetState());

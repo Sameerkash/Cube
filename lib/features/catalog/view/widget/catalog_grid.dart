@@ -15,7 +15,7 @@ class CatalogGrid extends StatelessWidget {
         crossAxisCount: 2,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return CatalogItem(data: catalog[index].itemData);
+        return CatalogItem(data: catalog[index].itemData,index: index,);
       },
     );
   }

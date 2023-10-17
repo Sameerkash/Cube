@@ -1,5 +1,6 @@
 import 'package:cube/common_utils/colors.dart';
 import 'package:cube/core/widgets/custom_button.dart';
+import 'package:cube/core/widgets/loader.dart';
 import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:cube/features/onboarding/cubit/onboarding_cubit.dart';
@@ -41,7 +42,7 @@ class _OnBoardingInsightScreenState extends State<OnBoardingInsightScreen> {
           },
           builder: (context, state) {
         if (state is OnBoardingAPILoading) {
-          return const Center(child: CircularProgressIndicator());
+          return AppLoader(tagLine : state.loadingMessage);
         } else if (state is OnBoardingLoaded) {
           return LoadedWidget(width);
         }

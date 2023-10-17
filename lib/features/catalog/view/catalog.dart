@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cube/core/widgets/loader.dart';
 import 'package:cube/features/catalog/models/catalog_object.dart';
 import 'package:cube/features/catalog/view/add_product_screen.dart';
 import 'package:cube/features/catalog/view/widget/catalog_grid.dart';
@@ -32,6 +33,7 @@ class _CatalogViewState extends State<CatalogView> {
           showAddProductBottomSheet(context);
         },
         child: const Icon(Icons.add),
+        backgroundColor : Colors.yellowAccent,
       ),
       body: BlocConsumer<CatalogCubit, CatalogStates>(
           listenWhen: (prev, cur) =>
@@ -48,7 +50,7 @@ class _CatalogViewState extends State<CatalogView> {
               cur is ProductAdditionState),
           builder: (context, state) {
             if (state is LoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return AppLoader(tagLine : "Bringing your products here....");
             } else if (state is LoadedState || state is ProductAdditionState) {
               return Stack(
                 children: [
@@ -59,8 +61,7 @@ class _CatalogViewState extends State<CatalogView> {
                           sigmaX: displayOverLayLoader ? 5 : 0,
                           sigmaY: displayOverLayLoader ? 5 : 0,
                         ),
-                        child:
-                            const Center(child: CircularProgressIndicator())),
+                        child: AppLoader(tagLine : "Adding your product....")),
                 ],
               );
             } else {

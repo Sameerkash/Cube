@@ -5,6 +5,7 @@ import 'package:cube/common_utils/colors.dart';
 import 'package:cube/common_utils/text_style.dart';
 import 'package:cube/core/widgets/custom_button.dart';
 import 'package:cube/core/widgets/custom_text_field.dart';
+import 'package:cube/core/widgets/loader.dart';
 import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:flutter/material.dart';
@@ -59,12 +60,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     controller: productName,
                     keyboardType: TextInputType.text),
                 spacer(),
-                heading('PRODUCT TITLE'),
-                CustomTextField(
-                    hintText: 'Give a bit of description about the product ?',
-                    controller: productDesc,
-                    keyboardType: TextInputType.text),
-                spacer(),
                 heading('PRICE'),
                 CustomTextField(
                     hintText: 'A suitable price for the product',
@@ -74,8 +69,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 CustomButton(
                   title: 'Add',
                   onTap: () {
-                    _cubit.addProduct(productName.text, productDesc.text,
-                        int.parse(productPrice.text),imagePath);
+                    _cubit.addProduct(productName.text, imagePath ?? '',
+                        int.parse(productPrice.text),);
                   },
                   gradientColors: const [Colors.yellowAccent, Colors.white],
                 ),
@@ -89,8 +84,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   sigmaX: isLoading ? 5 : 0,
                   sigmaY: isLoading ? 5 : 0,
                 ),
-                child:
-                const Center(child: CircularProgressIndicator())),
+                child: AppLoader()),
         ],
       ),
     );
@@ -121,6 +115,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Future showOptions() async {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (context) => Container(
           margin:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),

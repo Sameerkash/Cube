@@ -20,7 +20,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 
 
   Future<void> getOnBoardingInsights(String ideaInput,String aimInput,String financesInput) async {
-    emit(OnBoardingAPILoading());
+    emit(OnBoardingAPILoading('Generating Business Insights.....'));
     businessPitch = 'I want to start a new business. My idea is : $ideaInput. My goal is : $aimInput, My financials are : $financesInput';
     await getInsights(Constants.productInsightQuestion, Constants.productInsightHeading);
     await getInsights(Constants.businessInsightQuestion, Constants.businessInsightHeading);
@@ -36,7 +36,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   }
 
   Future<void> getWebsiteContent() async {
-    emit(OnBoardingAPILoading());
+    emit(OnBoardingAPILoading('Generating your website from scratch....'));
     String query = '$businessPitch . ${Constants.websiteContentQuestion}';
     String response = await getPalmResponse(forQuery: query);
     response = response.replaceAll("`", "").replaceAll("json", "").replaceAll("\n", "");
@@ -74,7 +74,10 @@ abstract class OnBoardingState {}
 
 class OnBoardingLoading extends OnBoardingState {}
 
-class OnBoardingAPILoading extends OnBoardingState {}
+class OnBoardingAPILoading extends OnBoardingState {
+  String loadingMessage;
+  OnBoardingAPILoading(this.loadingMessage);
+}
 
 class OnBoardingLoaded extends OnBoardingState {
   OnBoardingLoaded(this.cardsData);
