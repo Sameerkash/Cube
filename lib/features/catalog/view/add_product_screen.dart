@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:cube/common_utils/colors.dart';
 import 'package:cube/common_utils/text_style.dart';
@@ -25,6 +26,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   File? _image;
   String? imagePath;
   final picker = ImagePicker();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -41,43 +43,55 @@ class _AddProductScreenState extends State<AddProductScreen> {
         color: AppColors.cardBackground,
         borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
       ),
-      child: Form(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            spacer(),
-            heading('ADD IMAGES'),
-            AddProductImage(),
-            spacer(),
-            heading('PRODUCT TITLE'),
-            CustomTextField(
-                hintText: 'What is the name of this product?',
-                controller: productName,
-                keyboardType: TextInputType.text),
-            spacer(),
-            heading('PRODUCT TITLE'),
-            CustomTextField(
-                hintText: 'Give a bit of description about the product ?',
-                controller: productDesc,
-                keyboardType: TextInputType.text),
-            spacer(),
-            heading('PRICE'),
-            CustomTextField(
-                hintText: 'A suitable price for the product',
-                controller: productPrice,
-                keyboardType: TextInputType.number),
-            spacer(),
-            CustomButton(
-              title: 'Add',
-              onTap: () {
-                _cubit.addProduct(productName.text, productDesc.text,
-                    int.parse(productPrice.text),imagePath);
-              },
-              gradientColors: const [Colors.yellowAccent, Colors.white],
+      child: Stack(
+        children: [
+          Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                spacer(),
+                heading('ADD IMAGES'),
+                AddProductImage(),
+                spacer(),
+                heading('PRODUCT TITLE'),
+                CustomTextField(
+                    hintText: 'What is the name of this product?',
+                    controller: productName,
+                    keyboardType: TextInputType.text),
+                spacer(),
+                heading('PRODUCT TITLE'),
+                CustomTextField(
+                    hintText: 'Give a bit of description about the product ?',
+                    controller: productDesc,
+                    keyboardType: TextInputType.text),
+                spacer(),
+                heading('PRICE'),
+                CustomTextField(
+                    hintText: 'A suitable price for the product',
+                    controller: productPrice,
+                    keyboardType: TextInputType.number),
+                spacer(),
+                CustomButton(
+                  title: 'Add',
+                  onTap: () {
+                    _cubit.addProduct(productName.text, productDesc.text,
+                        int.parse(productPrice.text),imagePath);
+                  },
+                  gradientColors: const [Colors.yellowAccent, Colors.white],
+                ),
+                spacer(),
+              ],
             ),
-            spacer(),
-          ],
-        ),
+          ),
+          if (isLoading)
+            BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: isLoading ? 5 : 0,
+                  sigmaY: isLoading ? 5 : 0,
+                ),
+                child:
+                const Center(child: CircularProgressIndicator())),
+        ],
       ),
     );
   }
@@ -142,8 +156,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
+        isLoading = true;
       });
       imagePath = await _cubit.uploadImageGetId(_image!);
+      setState(() {
+        isLoading = false;
+      });
     }
     Navigator.pop(context);
   }
@@ -154,8 +172,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (pickedFile != null) {
     setState(() {
         _image = File(pickedFile.path);
+        isLoading = true;
     });
     imagePath = await _cubit.uploadImageGetId(_image!);
+    setState(() {
+      isLoading = false;
+    });
     }
     Navigator.pop(context);
   }

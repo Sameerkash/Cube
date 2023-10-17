@@ -3,6 +3,7 @@ import 'package:cube/core/widgets/custom_button.dart';
 import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
 import 'package:cube/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:cube/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +34,11 @@ class _OnBoardingInsightScreenState extends State<OnBoardingInsightScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width - 100;
     return Scaffold(
-      body: BlocBuilder<OnBoardingCubit, OnBoardingState>(
+      body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
+        listenWhen: (prev,cur) => (cur is OnBoarded),
+          listener: (context,state) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppView()));
+          },
           builder: (context, state) {
         if (state is OnBoardingAPILoading) {
           return const Center(child: CircularProgressIndicator());
@@ -68,7 +73,9 @@ class _OnBoardingInsightScreenState extends State<OnBoardingInsightScreen> {
     ),
   );
 
-  void handleLaunchBusiness() {}
+  void handleLaunchBusiness() {
+    _cubit.getWebsiteContent();
+  }
 
   void handleRetry() {
     Navigator.pop(context);

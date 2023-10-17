@@ -26,7 +26,7 @@ void main() async {
         scaffoldBackgroundColor: AppColors.scaffoldBackground,
         useMaterial3: true,
       ),
-      home: AppView()));
+      home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
