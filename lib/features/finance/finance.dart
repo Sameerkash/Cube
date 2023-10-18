@@ -27,34 +27,30 @@ class _FinanceViewState extends State<FinanceView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Finances Page'),
-      ),
-      body: Column(
-        children: [
-          // Chart View
-          Container(
-            height: MediaQuery.of(context).size.height * 0.28,
-            child: LineChartSample2(),
-          ),
+    return Column(
+      children: [
+        // Chart View
+        Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: LineChartSample2(),
+        ),
 
-          // ListView for latest sales
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10, // Replace with actual sales data count
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Customer Name $index'),
-                  subtitle: Text(
-                      'Date: 2023-10-10, Order Number: $index, Total Price: \$100'),
-                );
-              },
-            ),
+        // ListView for latest sales
+        Expanded(
+          child: ListView.builder(
+            itemCount: 10, // Replace with actual sales data count
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text('Customer Name $index'),
+                subtitle: Text(
+                    'Date: 2023-10-10, Order Number: $index, Total Price: \$100'),
+              );
+            },
           ),
+        ),
 
-          // Horizontal list of cards for loan benefits and offers
-          // Container(
+        // Horizontal list of cards for loan benefits and offers
+        // Container(
           //   height: 200,
           //   width: 200,
           //   child: ListView.builder(
@@ -71,8 +67,7 @@ class _FinanceViewState extends State<FinanceView> {
           //   ),
           // ),
         ],
-      ),
-    );
+      );
   }
 
   void buildOrdersBottomSheet(BuildContext context) {

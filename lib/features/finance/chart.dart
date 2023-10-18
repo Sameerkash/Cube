@@ -1,4 +1,4 @@
-
+import 'package:cube/common_utils/text_style.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -21,60 +21,54 @@ class _LineChartSample2State extends State<LineChartSample2> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              right: 18,
-              left: 12,
-              top: 24,
-              bottom: 12,
-            ),
-            child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
+        Padding(
+          padding: const EdgeInsets.only(
+            // right: 18,
+            // left: 12,
+            top: 24,
+            bottom: 12,
+          ),
+          child: LineChart(
+            mainData(),
           ),
         ),
-        SizedBox(
-          width: 60,
-          height: 34,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              'avg',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-              ),
-            ),
-          ),
-        ),
+        // SizedBox(
+        //   width: 60,
+        //   height: 34,
+        //   child: TextButton(
+        //     onPressed: () {
+        //       setState(() {
+        //         showAvg = !showAvg;
+        //       });
+        //     },
+        //     child: Text(
+        //       'avg',
+        //       style: TextStyle(
+        //         fontSize: 12,
+        //         color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-    );
+    final style = AppTextStyle.regular;
     Widget text;
     switch (value.toInt()) {
       case 2:
-        text = const Text('MAR', style: style);
+        text = Text('MAR', style: style);
         break;
       case 5:
-        text = const Text('JUN', style: style);
+        text = Text('JUN', style: style);
         break;
       case 8:
-        text = const Text('SEP', style: style);
+        text = Text('SEP', style: style);
         break;
       default:
-        text = const Text('', style: style);
+        text = Text('', style: style);
         break;
     }
 
@@ -110,10 +104,10 @@ class _LineChartSample2State extends State<LineChartSample2> {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
-        drawVerticalLine: true,
+        show: false,
+        drawVerticalLine: false,
         horizontalInterval: 1,
-        verticalInterval: 1,
+        verticalInterval: 5,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: AppColors.mainGridLineColor,
@@ -203,7 +197,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         horizontalInterval: 1,
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Color(0xff37434d),
+            // color: AppColors.,
             strokeWidth: 1,
           );
         },
@@ -290,7 +284,6 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
   }
 }
-
 
 class AppColors {
   static const Color primary = contentColorCyan;
