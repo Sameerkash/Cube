@@ -17,7 +17,6 @@ class TabItem {
     Icons.home,
     Icons.attach_money_rounded,
     Icons.shop,
-    Icons.chat,
   ];
 }
 

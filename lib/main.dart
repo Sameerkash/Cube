@@ -100,7 +100,6 @@ class _AppViewState extends State<AppView> {
       create: (context) => CatalogCubit(),
       child: const CatalogView(),
     ),
-    const ChatView(),
   ];
 
   void onPageChange(int index) {
