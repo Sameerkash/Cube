@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
-import styles from "../styles/Home.module.css";
+import React, { useEffect, useRef } from "react";
 import ProductsPage from "./ProductsPage";
+import { useStore } from "@/store/use_store";
 
 const LandingPage: React.FC = () => {
   const thirdSectionRef = useRef<HTMLDivElement | null>(null);
@@ -10,15 +10,17 @@ const LandingPage: React.FC = () => {
       thirdSectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   return (
     <div className="flex flex-col">
       {/* Section 1: Landing */}
       <section className="flex flex-col justify-center items-center bg-blue-500 text-white h-screen">
         <h1 className="text-2xl md:text-8xl font-bold mb-4 text-center">
-          Welcome to Cube E-Commerce
+          Ferns and Petals
         </h1>
         <p className="text-sm md:text-3xl mb-28 text-center">
-          Discover quality products and their best features.
+          This beautiful flower bouquet is the perfect way to show someone you
+          care.
         </p>
         <button
           className="rounded-full px-6 py-3 bg-white text-blue-500 font-bold"
@@ -52,8 +54,7 @@ const LandingPage: React.FC = () => {
         className="flex flex-col justify-center items-center bg-yellow-500 text-white h-screen"
         ref={thirdSectionRef}
       >
-        <ProductsPage/>
-        {/* Add content for this section */}
+        <ProductsPage />
       </section>
     </div>
   );

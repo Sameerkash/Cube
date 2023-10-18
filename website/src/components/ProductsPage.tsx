@@ -1,10 +1,19 @@
 // components/Products.tsx
 import React, { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { useStore } from "@/store/use_store";
 
 interface Product {
   id: number;
   title: string;
-  price: number;
+  amount: number;
   imageUrl: string;
 }
 
@@ -12,52 +21,56 @@ const dummyProducts: Product[] = [
   {
     id: 1,
     title: "Product 1",
-    price: 19.99,
+    amount: 19.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   {
     id: 2,
     title: "Product 2",
-    price: 24.99,
+    amount: 24.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   {
     id: 2,
     title: "Product 2",
-    price: 24.99,
+    amount: 24.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   {
     id: 2,
     title: "Product 2",
-    price: 24.99,
+    amount: 24.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   {
     id: 2,
     title: "Product 2",
-    price: 24.99,
+    amount: 24.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   {
     id: 2,
     title: "Product 2",
-    price: 24.99,
+    amount: 24.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   {
     id: 2,
     title: "Product 2",
-    price: 24.99,
+    amount: 24.99,
     imageUrl: "https://via.placeholder.com/300",
   },
   // Add more dummy products as needed
 ];
 
 const ProductsPage: React.FC = () => {
+  const { catalogObjects } = useStore();
+
+  if (!catalogObjects || catalogObjects.length < 1) return <div></div>;
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-      {dummyProducts.map((product) => (
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      {catalogObjects.map((product) => (
         <Product key={product.id} product={product} />
       ))}
     </div>
@@ -73,6 +86,8 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = ({ product }) => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
+  const { setCartData } = useStore();
+
   const handleProductClick = () => {
     setIsOverlayVisible(true);
   };
@@ -84,32 +99,75 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const handleAddToCart = () => {
     // Add your logic to handle adding the product to the cart
     console.log("Product added to cart:", product);
+    setCartData(product);
   };
 
   return (
     <>
-      <div className="bg-white p-4 rounded-xl">
-        <img
-          src={product.imageUrl}
-          alt={product.title}
-          className="mb-2 w-full rounded-md"
-        />
-        <h3 className="text-black text-lg font-semibold mb-2">
-          {product.title}
-        </h3>
-        <div className="flex justify-between">
-          <p className="text-gray-700">${product.price.toFixed(2)}</p>
-          {/* Add to Cart button */}
-          <button
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded cursor-pointer"
-            onClick={handleProductClick}
-          >
-            View Product
-          </button>
-        </div>
-      </div>
+      <Dialog>
+        <DialogTrigger>
+          <div className="bg-white p-4 rounded-xl">
+            <img
+              src={product.imageUrl}
+              alt={product.title}
+              className="mb-2 w-full rounded-md"
+            />
+            <h3 className="text-black text-lg font-semibold mb-2">
+              {product.title}
+            </h3>
+            <div className="flex justify-between">
+              <p className="text-gray-700">${product.amount}</p>
+              {/* Add to Cart button */}
+              <button
+                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-3xl cursor-pointer"
+                onClick={handleProductClick}
+              >
+                View Product
+              </button>
+            </div>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="w-3/4">
+          <DialogHeader>
+            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+            <DialogDescription>
+              <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-75 z-50 rounded-md">
+                <div className="bg-white p-8 flex ">
+                  <div className="flex-1">
+                    <div className="flex flex-col mb-4">
+                      <img
+                        src={product.imageUrl}
+                        alt={product.title}
+                        className="mb-2 w-full"
+                      />
+                    </div>
+                  </div>
 
-      {isOverlayVisible && (
+                  <div className="flex-1 ml-4">
+                    <h3 className="text-xl text-black font-bold mb-2">
+                      {product.title}
+                    </h3>
+                    <p className="text-gray-700 mb-4">
+                      Product description goes here.
+                    </p>
+                    <p className="text-xl text-black font-bold">
+                      ${product.amount}
+                    </p>
+                    <button
+                      className="bg-blue-500 font-bold py-2 px-4 rounded-md mt-28 text-white"
+                      onClick={handleAddToCart}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      {/* {isOverlayVisible && (
         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-75 z-50 rounded-md">
           <div className="bg-white p-8 flex ">
             <div className="flex-1">
@@ -119,7 +177,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                   alt={product.title}
                   className="mb-2 w-full"
                 />
-                {/* Add other images */}
               </div>
             </div>
 
@@ -132,10 +189,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 Product description goes here.
               </p>
               <p className="text-xl text-black font-bold">
-                ${product.price.toFixed(2)}
+                ${product.amount.toFixed(2)}
               </p>
-
-              {/* Add to Cart button */}
               <button
                 className="bg-blue-500 font-bold py-2 px-4 rounded mt-28"
                 onClick={handleAddToCart}
@@ -145,7 +200,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             </div>
           </div>
         </div>
-      )}
+      )
+      } */}
     </>
   );
 };
