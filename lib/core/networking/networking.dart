@@ -17,7 +17,7 @@ class Networking {
   static Map<String,dynamic> squareHeaders = {
     'Square-Version': '2023-09-25',
     'Authorization' : Secrets.squareAPIKey,
-    'Content-Type': 'application/octet-stream'
+    'Content-Type': 'application/json'
   };
 
   static Map<String,dynamic> squareHeadersForImage = {
@@ -36,7 +36,7 @@ class Networking {
   }
 
   Future<Response?> postRequest(
-      {required String path, required dynamic body,Map<String,dynamic>? params, Map<String,dynamic>? headers}) async {
+      {required String path, required dynamic body,Map<String,dynamic>? params,required Map<String,dynamic>? headers}) async {
     try {
       Response response = await _dio.post(path, data: body,
           queryParameters: params,

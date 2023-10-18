@@ -5,6 +5,7 @@ import 'package:cube/common_utils/colors.dart';
 import 'package:cube/common_utils/text_style.dart';
 import 'package:cube/core/widgets/custom_button.dart';
 import 'package:cube/core/widgets/custom_text_field.dart';
+import 'package:cube/core/widgets/dark_bottom_sheet.dart';
 import 'package:cube/core/widgets/loader.dart';
 import 'package:cube/core/widgets/product_description_card.dart';
 import 'package:cube/features/catalog/cubit/catalog_cubit.dart';
@@ -37,13 +38,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
-      ),
+    return DarkBottomSheet(
       child: Stack(
         children: [
           Form(

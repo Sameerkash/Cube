@@ -137,7 +137,7 @@ class BuisnessInsghtsSection extends StatelessWidget {
                   children: [
                     IconContainer(
                       color: AppColors.cardPrimary,
-                      asset: 'assets/icons/creditcard-face.svg',
+                      asset: 'assets/images/creditcard-face.svg',
                     ),
                     const SizedBox(
                       width: 14,
